@@ -2,14 +2,16 @@ import { WifiOff } from "lucide-react";
 
 interface OfflineVideoProps {
   username: string;
-}
+};
 
-export const OfflineVideo = ({ username }: OfflineVideoProps) => {
+export const OfflineVideo = ({
+  username,
+}: OfflineVideoProps) => {
   return (
     <div className="h-full flex flex-col space-y-4 justify-center items-center">
-      <WifiOff className="w-10 h-10 text-muted-foreground" />
+      <WifiOff className="h-10 w-10 text-muted-foreground" />
       <p className="text-muted-foreground">
-        <span>{username}</span> is offline
+        {username} is offline
       </p>
     </div>
   );

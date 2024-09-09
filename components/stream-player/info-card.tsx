@@ -1,28 +1,25 @@
-"use client";
-
-import { Pencil } from "lucide-react";
-import { Separator } from "../ui/separator";
-import Image from "next/image";
-import { InfoModal } from "./info-modal";
+'use client'
+import { Pencil } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
+import Image from 'next/image'
+import { InfoModal } from './info-modal'
 
 interface InfoCardProps {
-  hostIdentity: string;
-  viewerIdentity: string;
-  name: string;
-  thumbnailUrl: string | null;
+  name: string
+  thumbnailUrl: string | null
+  hostIdentity: string
+  viewerIdentity: string
 }
 
 export const InfoCard = ({
-  hostIdentity,
-  viewerIdentity,
   name,
   thumbnailUrl,
+  hostIdentity,
+  viewerIdentity,
 }: InfoCardProps) => {
-  const hostAsViewer = `host-${hostIdentity}`;
-  console.log(hostAsViewer, viewerIdentity, hostAsViewer === viewerIdentity);
-  const isHost = hostAsViewer === viewerIdentity;
-
-  if (!isHost) return null;
+  const hostAsViewer = `host-${hostIdentity}`
+  const isHost = viewerIdentity === hostAsViewer
+  if (!isHost) return null
   return (
     <div className="px-4">
       <div className="rounded-xl bg-background">
@@ -31,14 +28,14 @@ export const InfoCard = ({
             <Pencil className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-sm lg:text-lg font-semibold capitalize">
-              Edit stream info
+            <h2 className="text-sm lg:text-base font-semibold capitalize">
+              Edit your stream info
             </h2>
             <p className="text-muted-foreground text-xs lg:text-sm">
               Maximize your visibility
             </p>
           </div>
-          <InfoModal initialName={name} initialUrl={thumbnailUrl} />
+          <InfoModal initialName={name} initialThumbnailUrl={thumbnailUrl} />
         </div>
         <Separator />
         <div className="p-4 lg:p-6 space-y-4">
@@ -48,16 +45,19 @@ export const InfoCard = ({
           </div>
           <div>
             <h3 className="text-sm text-muted-foreground mb-2">Thumbnail</h3>
-            {thumbnailUrl ? (
+            {thumbnailUrl && (
               <div className="relative aspect-video rounded-md overflow-hidden w-[200px] border border-white/10">
-                <Image fill src={thumbnailUrl} alt={name} />
+                <Image
+                  fill
+                  src={thumbnailUrl}
+                  alt={name}
+                  className="object-cover"
+                />
               </div>
-            ) : (
-              <div></div>
             )}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

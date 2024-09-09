@@ -1,6 +1,6 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs";
 
-import { db } from "./db";
+import { db } from "@/lib/db";
 
 export const getSelf = async () => {
   const self = await currentUser();
@@ -10,13 +10,11 @@ export const getSelf = async () => {
   }
 
   const user = await db.user.findUnique({
-    where: {
-      externalUserId: self.id,
-    },
+    where: { externalUserId: self.id },
   });
 
   if (!user) {
-    throw new Error("User not found");
+    throw new Error("Not found");
   }
 
   return user;
@@ -30,16 +28,14 @@ export const getSelfByUsername = async (username: string) => {
   }
 
   const user = await db.user.findUnique({
-    where: {
-      username,
-    },
+    where: { username }
   });
 
   if (!user) {
     throw new Error("User not found");
   }
 
-  if (user.username !== self.username) {
+  if (self.username !== user.username) {
     throw new Error("Unauthorized");
   }
 
